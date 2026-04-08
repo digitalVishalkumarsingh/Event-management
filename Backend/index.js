@@ -14,9 +14,23 @@ createcontact();
 const app = express();
 const Port = process.env.PORT || 5000;
 
+// Allowed origins: local dev + Vercel production frontend
+const allowedOrigins = [
+  "http://localhost:3000",
+  process.env.CLIENT_URL,           // e.g. https://event-management-xyz.vercel.app
+].filter(Boolean);
+
 // Middleware
 app.use(express.json());
-app.use(cors({ origin: process.env.CLIENT_URL || "http://localhost:3000" }));
+app.use(cors({
+  origin: (origin, callback) => {
+    // Allow requests with no origin (mobile apps, curl, Postman)
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    callback(new Error(`CORS blocked: ${origin}`));
+  },
+  credentials: true,
+}));
 app.use(helmet());
 
 // Routes
@@ -32,5 +46,10 @@ app.use((err, req, res, next) => {
   res.status(500).json({ success: false, message: "Something went wrong!" });
 });
 
-// Start server
-app.listen(Port, () => console.log(`Server running on port ${Port}`));
+// Start server only when run directly (not in Vercel serverless)
+if (require.main === module) {
+  app.listen(Port, () => console.log(`Server running on port ${Port}`));
+}
+
+// Export for Vercel serverless
+module.exports = app;
