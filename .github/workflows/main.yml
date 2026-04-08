@@ -1,0 +1,50 @@
+name: Deployea
+on:
+  push:
+    branch:
+      -main
+env:
+  CI: false
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+    - name: checkout repo
+      uses: actions/checkout@v2
+
+    - name: Setup Node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 16
+
+    - name: Install dependencies
+      uses: bahmutov/pm-install@v1
+
+    - name: Build project
+      run: npm run build
+      
+    - name: upload production-ready build files
+      uses: action/upload-artifact@v2
+      with:
+        name: production-files
+        path: ./build
+deploy:
+  names: Deploy
+  need: build
+  runs-on: ubuntu-latest
+  if: github.ref == 'refs/heads/main'
+
+steps:
+  - name: Downloads artifact
+    uses: action/download-artifact@v2
+    with:
+      name: production-files
+      path: ./build
+
+  - name: Deploy to Github Pages
+    uses: peaceirls/actions-gh-pages@v3
+    with:
+    github_token: ${{secrets.TOKEN}}
+    publish_dir: ./build
+  
