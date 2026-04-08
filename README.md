@@ -15,9 +15,18 @@
 
 **A full-stack event management web application** for booking, managing, and showcasing events — with online payments, email notifications, vendor management, and a modern responsive UI.
 
-[🚀 Live Demo](#) · [📖 API Docs](#-api-endpoints) · [🐛 Report Bug](https://github.com/digitalVishalkumarsingh/Event-management/issues) · [💡 Request Feature](https://github.com/digitalVishalkumarsingh/Event-management/issues)
+[🚀 Live Demo](https://eventkiya-frontend.vercel.app) · [⚙️ Backend API](https://eventkiya-backend.vercel.app) · [📖 API Docs](#-api-endpoints) · [🐛 Report Bug](https://github.com/digitalVishalkumarsingh/Event-management/issues) · [💡 Request Feature](https://github.com/digitalVishalkumarsingh/Event-management/issues)
 
 </div>
+
+---
+
+## 🌐 Live Deployment
+
+| Service | URL |
+|---------|-----|
+| 🖥️ **Frontend** | [https://eventkiya-frontend.vercel.app](https://eventkiya-frontend.vercel.app) |
+| ⚙️ **Backend API** | [https://eventkiya-backend.vercel.app](https://eventkiya-backend.vercel.app) |
 
 ---
 
